@@ -62,7 +62,7 @@ export const initSocket = (httpServer: HTTPServer): void => {
         const key: ActiveTabKey = `${userId}:${appId}`;
         if (activeTabs.get(key) === socket.id) {
           activeTabs.delete(key);
-          console.log(`Tab closed for app ${appId} and user ${userId}`);
+          // console.log(`Tab closed for app ${appId} and user ${userId}`);
         }
       });
       
@@ -70,7 +70,7 @@ export const initSocket = (httpServer: HTTPServer): void => {
      * Handle user disconnection
      */
     socket.on("disconnect", () => {
-      console.log("A client disconnected:", socket.id);
+      // console.log("A client disconnected:", socket.id);
 
       // Remove all references to the disconnected socket
       for (const [key, socketId] of activeTabs.entries()) {
