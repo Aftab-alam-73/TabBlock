@@ -1,5 +1,7 @@
 import { Request,Response } from "express";
-import { matchedData,validationResult } from "express-validator";
+const { validationResult, matchedData } = require("express-validator");
+
+
 import { auditLogType } from "../types/type";
 import AuditLog from "../models/auditLogModel";
 
@@ -12,7 +14,6 @@ class AuditLogController{
                 const payload=matchedData(req) as auditLogType;
           try{
               const auditLog=await AuditLog.create(payload);
-              console.log("Log Added: ", auditLog);
               return res.status(200).json({message:"Audit Log added successfully", data: auditLog}); 
           }catch(error:any){
             return res.status(500).

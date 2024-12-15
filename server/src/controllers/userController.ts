@@ -1,5 +1,6 @@
 import { Request,Response } from "express";
-import { validationResult,matchedData } from "express-validator";
+const { validationResult, matchedData } = require("express-validator");
+
 import { userType } from "../types/type";
 import User from "../models/userModel";
 import utils from "../utility/utils";

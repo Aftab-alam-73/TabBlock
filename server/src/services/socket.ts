@@ -25,7 +25,7 @@ export const initSocket = (httpServer: HTTPServer): void => {
   });
 
   io.on("connection", (socket: Socket) => {
-    console.log("A client connected:", socket.id);
+    // console.log("A client connected:", socket.id);
 
     /**
      * Handle user opening an app in a tab

@@ -1,4 +1,5 @@
-import  {body}  from 'express-validator';
+const { body } = require("express-validator");
+
 
 export const loginDataValidator=[
     body("email").trim().notEmpty().withMessage("Email should not be empty").isEmail().withMessage("Email should be a valid email address"),

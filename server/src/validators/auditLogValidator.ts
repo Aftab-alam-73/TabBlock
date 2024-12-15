@@ -1,4 +1,5 @@
-import  {body}  from 'express-validator';
+const { body } = require("express-validator");
+
 
 
 export const auditLogDataValidator = [
@@ -24,7 +25,7 @@ export const auditLogDataValidator = [
   body("details")
     .notEmpty()
     .withMessage("Details should not be empty")
-    .custom(value => {
+    .custom((value:any) => {
       if (typeof value !== "object" || Array.isArray(value)) {
         throw new Error("Details must be an object");
       }
