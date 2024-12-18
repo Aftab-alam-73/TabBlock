@@ -8,12 +8,12 @@ import { useDebounce } from "../hooks/useDebounce";
 
 const Home = () => {
   const navigate = useNavigate();
-  const [searchInput, setSearchInput] = useState<string>(""); // Raw user input
-  const [filteredApps, setFilteredApps] = useState<AppType[]>([]); // Filtered apps
+  const [searchInput, setSearchInput] = useState<string>(""); 
+  const [filteredApps, setFilteredApps] = useState<AppType[]>([]); 
   const { data, isSuccess, isLoading } = useGetAllApplicationsQuery();
   const debouncedSearch = useDebounce(searchInput);
 
-  // Load all apps into state when data is fetched
+  // Load all apps into state when data is fetched 
   useEffect(() => {
     if (isSuccess && data?.data) {
       setFilteredApps(data.data);
@@ -37,7 +37,7 @@ const Home = () => {
   return (
     <div>
       <Header setSearchInput={setSearchInput} />
-      <div className="flex gap-4 flex-wrap">
+      <div className="flex gap-4 flex-wrap justify-center">
         {isLoading ? (
           <h1 className="text-center font-bold text-2xl">Loading...</h1>
         ) : (

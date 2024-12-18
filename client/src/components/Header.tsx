@@ -2,6 +2,7 @@ import { useDispatch } from "react-redux";
 import { useLogOutMutation } from "../redux/api/authSlice"
 import toast from "react-hot-toast";
 import { clearUser } from "../redux/state/userSlice";
+import User from "./User";
 
 interface HeaderPropsType{
    
@@ -28,9 +29,13 @@ const Header = ({setSearchInput}:HeaderPropsType) => {
     }
   return (
     <div className="bg-blue-600 p-4 flex justify-between ">
-        <span className="text-3xl font-bold text-white">TabLock</span>
-        <input onChange={(e)=>setSearchInput(e.target.value)} type="text" placeholder='Search...' className="outline-none border-none p-3 rounded-md"/>
-        <button onClick={handleLogout} className="bg-white rounded-md text-blue-500 border-none px-4">Logout</button>
+        <span className="text-3xl font-bold text-white mobile:text-xl">TabBlock</span>
+        <input onChange={(e)=>setSearchInput(e.target.value)} type="text" placeholder='Search...' 
+        className="outline-none border-none p-3 rounded-md mobile:p-1 mobile:w-40"/>
+        <div className="flex items-center justify-center  gap-2">
+        <div className="mobile:hidden"><User/></div>
+        <button onClick={handleLogout} className="bg-white rounded-md text-blue-500 border-none px-4 py-2">Logout</button>
+        </div>
     </div>
   )
 }

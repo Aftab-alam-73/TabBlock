@@ -9,53 +9,61 @@ import toast from "react-hot-toast";
 
 const Application = () => {
   const user = useSelector((state: RootState) => state.user);
-  const [AddAuditLog]=useAddAuditLogMutation();
+  const [AddAuditLog] = useAddAuditLogMutation();
   const { state } = useLocation();
   const navigate = useNavigate();
-  const app:{id:string,app_name:string} = state?.app;
-  console.log("App:",app.id);
+  const app: { id: string; app_name: string } = state?.app;
   const [conflict, setConflict] = useState(false); // State to handle conflict visibility
-  useEffect(()=>{
-   if(conflict && user.id!=null){
-  // Log audit action
-  AddAuditLog({
-    
-      user_id: user.id,
-      action_type: "tab_conflict",
-      details: {
-        app_id: app.id,
-        app_name: app.app_name,
-      },
-    
-  })
-  .unwrap()
-  .then(()=>{toast.success("Activity Log added successfully!")})
-  .catch(()=>{toast.error(" Failed To Add Activity Log")})
 
-}
-if(!conflict && user.id!=null){
-  // Log audit action
-  AddAuditLog({
-    
-      user_id: user.id,
-      action_type: "app_selection",
-      details: {
-        app_id: app.id,
-        app_name: app.app_name,
-      },
-    
-  })
-  .unwrap()
-  .then(()=>{toast.success("Activity Log added successfully!")})
-  .catch(()=>{toast.error(" Failed To Add Activity Log")})
-}
-  },[user.id,conflict])
+  // Log "app_selection" when the component mounts
+  useEffect(() => {
+    if (user.id && app) {
+      AddAuditLog({
+        user_id: user.id,
+        action_type: "app_selection",
+        details: {
+          app_id: app.id,
+          app_name: app.app_name,
+        },
+      })
+        .unwrap()
+        .then(() => {
+          toast.success("App Selection Log added successfully!");
+        })
+        .catch(() => {
+          toast.error("Failed To Add App Selection Log");
+        });
+    }
+  }, [user.id, app, AddAuditLog]);
 
+  // Log "tab_conflict" only when a conflict occurs
+  useEffect(() => {
+    if (conflict && user.id && app) {
+      AddAuditLog({
+        user_id: user.id,
+        action_type: "tab_conflict",
+        details: {
+          app_id: app.id,
+          app_name: app.app_name,
+        },
+      })
+        .unwrap()
+        .then(() => {
+          toast.success("Tab Conflict Log added successfully!");
+        })
+        .catch(() => {
+          toast.error("Failed To Add Tab Conflict Log");
+        });
+    }
+  }, [conflict, user.id, app]);
+
+  // Handle WebSocket events
   useEffect(() => {
     if (!app) {
       navigate("/"); // Redirect to home if no app is selected
       return;
     }
+
     // Emit an event to notify the server that this app is opened
     socket.emit("open-app", { userId: user.id, appId: app.id });
 
@@ -69,7 +77,6 @@ if(!conflict && user.id!=null){
     // Listen for "force-logout" events
     socket.on("force-logout", ({ appId }) => {
       if (appId === app.id) {
-         
         navigate("/");
       }
     });

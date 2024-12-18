@@ -11,7 +11,7 @@ export const useDebounce = (value: string, delay: number = 500) => {
     return () => {
       clearTimeout(timer);
     };
-  }, [value, delay]); // Use `value` instead of `debounceValue` in dependencies
+  }, [value, delay]); 
 
   return debouncedValue;
 };
