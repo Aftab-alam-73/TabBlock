@@ -19,7 +19,7 @@ const httpServer = createServer(app);
 /** MIDDLEWARES */
 app.use(express.json());
 app.use(cors({
-    origin: process.env.CLIENT_URL 
+    origin: ["https://tab-block.vercel.app","https://zingy-piroshki-d17470.netlify.app"]
    
 }));
 app.use(cookieParser());

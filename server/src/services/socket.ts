@@ -20,7 +20,7 @@ const activeTabs: Map<ActiveTabKey, string> = new Map();
 export const initSocket = (httpServer: HTTPServer): void => {
   const io = new Server(httpServer, {
     cors: {
-      origin:process.env.CLIENT_URL || "*", 
+      origin:["https://tab-block.vercel.app","https://zingy-piroshki-d17470.netlify.app"], 
     },
   });
 
