@@ -14,7 +14,7 @@ const App = () => {
      return children;
   }
   const ProtectedLoginRoute=({children}:{children:React.ReactNode})=>{
-    if(user.id) return <Navigate to={'/'}/>
+    if(user.id) return <Navigate to="/"/>
     return children;
  }
 

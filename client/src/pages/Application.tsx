@@ -15,7 +15,7 @@ const Application = () => {
   const app: { id: string; app_name: string } = state?.app;
   const [conflict, setConflict] = useState(false); // State to handle conflict visibility
 
-  // Log "app_selection" when the component mounts
+  
   useEffect(() => {
     if (user.id && app) {
       AddAuditLog({
@@ -36,7 +36,7 @@ const Application = () => {
     }
   }, [user.id, app, AddAuditLog]);
 
-  // Log "tab_conflict" only when a conflict occurs
+ 
   useEffect(() => {
     if (conflict && user.id && app) {
       AddAuditLog({
